@@ -1,26 +1,28 @@
 import java.awt.Color;
-import java.awt.Dimension;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 
 public class XmlEditorStyledDocument extends DefaultStyledDocument {
 	private SimpleAttributeSet elementAttributes;
 	private SimpleAttributeSet textAttributes;
-	
+	private SimpleAttributeSet defaultAttributes;
+	private Style defaultStyle;
+
 	public XmlEditorStyledDocument(){
 		super();
+		StyleContext sc = (StyleContext)getAttributeContext();
+		defaultStyle = sc.getStyle(StyleContext.DEFAULT_STYLE);
+		
 		elementAttributes = new SimpleAttributeSet();
-	    StyleConstants.setForeground(elementAttributes, Color.CYAN);
-	    
+	    StyleConstants.setForeground(elementAttributes, Color.BLUE);
+
 	    textAttributes = new SimpleAttributeSet();
-	    StyleConstants.setForeground(textAttributes, Color.RED);
+	    StyleConstants.setForeground(textAttributes, Color.BLACK);
 
 //	    StyleConstants.setBackground(elementAttributes, Color.RED);
 //	    getStyle("element").addAttributes(elementAttributes);
@@ -31,7 +33,7 @@ public class XmlEditorStyledDocument extends DefaultStyledDocument {
 	}
 	
 	public void setText(int offset, int length){
-		setCharacterAttributes(offset, length, textAttributes, true);		
+		setCharacterAttributes(offset, length, textAttributes, true);
 	}
 //
 //	public static void main(String[] args) {
@@ -52,6 +54,10 @@ public class XmlEditorStyledDocument extends DefaultStyledDocument {
 //		}
 //		xsd.setElement(5,0,11,0);
 //	}
+
+	public void clear() {
+		setCharacterAttributes(0, getLength(), defaultStyle, true);
+	}
 	
 
 }

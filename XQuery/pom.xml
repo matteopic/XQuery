@@ -19,11 +19,11 @@
   
   <dependencies>
   	
-  	<dependency>
-  		<groupId>jaxen</groupId>
-  		<artifactId>jaxen</artifactId>
-  		<version>1.1-beta-4</version>
-  	</dependency>
+<dependency>
+	<groupId>xerces</groupId>
+	<artifactId>xercesImpl</artifactId>
+	<version>2.11.0</version>
+</dependency>
   	
   	  	<dependency>
   		<groupId>jdom</groupId>
