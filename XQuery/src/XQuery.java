@@ -51,12 +51,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.ParserAdapter;
-import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.sun.org.apache.xml.internal.serializer.OutputPropertyUtils;
 public class XQuery extends JFrame{
 
 	private Document doc;
@@ -86,9 +80,6 @@ public class XQuery extends JFrame{
 	}
 
 	public void start()throws Exception{
-	
-		
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640,480);
 		
@@ -149,7 +140,8 @@ public class XQuery extends JFrame{
 	}
 
 	private boolean updateDoc(){
-		StringReader sr = new StringReader(xmlTextDocument.getText());
+		String strXml = xmlTextDocument.getText();
+		StringReader sr = new StringReader(strXml);
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
@@ -157,6 +149,12 @@ public class XQuery extends JFrame{
 		SAXParser sParser = null;
 		try {
 			builder = factory.newDocumentBuilder();
+
+			if(strXml.trim().isEmpty()){
+				doc = builder.newDocument();
+				return true;
+			}
+			
 			doc = builder.parse(new InputSource(sr)); // Create from whole cloth
 			sParser = spFactory.newSAXParser();
 
@@ -268,14 +266,29 @@ public class XQuery extends JFrame{
 		return path.toString();
 	}
 
-	private  int elementIndex(Node element){
-		Node parent = element.getParentNode();
+	private  int elementIndex(Element element){
+		Node parent = (Node)element.getParentNode();
 		if(parent == null)return -1;
 
-		NodeList list = parent.getChildNodes();
-		for (int i = 0; i < list.getLength(); i++) {
-			if(list.item(i)==element)return i;
+		NodeList list;
+		short nodeType = parent.getNodeType();
+		switch (nodeType) {
+		case Node.DOCUMENT_NODE:
+			return 0;
+
+		case Node.ELEMENT_NODE:
+			list = ((Element)parent).getElementsByTagName( element.getNodeName() );
+			break;
+
+		default:
+			System.out.println("Unhandled parent node type" + nodeType);
+			return -1;
 		}
+
+		for (int i = 0; i < list.getLength(); i++) {
+			if(list.item(i) == element)return i;
+		}
+
 		return -1;
 	}
 
