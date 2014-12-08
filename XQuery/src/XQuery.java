@@ -312,7 +312,7 @@ public class XQuery extends JFrame{
 			    	xpaths.add( extractXPath((Element)node) );
 			    	this.nodes.add((Element)node);
 			    }else{
-					System.out.println(node);
+//					System.out.println(node);
 				}
 			}
 			/*

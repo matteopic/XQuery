@@ -23,8 +23,8 @@ public class MyHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 
-		System.out.println("start element " + qName + " at: "
-				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
+//		System.out.println("start element " + qName + " at: "
+//				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
 		
 		super.startElement(uri, localName, qName, attributes);
 
@@ -33,14 +33,14 @@ public class MyHandler extends DefaultHandler {
 		int offsetStart = originalXml.lastIndexOf('<', offsetEnd);
 		
 		
-		System.out.println("("+offsetStart+"," +offsetEnd+")" + originalXml.substring(offsetStart, offsetEnd));
+//		System.out.println("("+offsetStart+"," +offsetEnd+")" + originalXml.substring(offsetStart, offsetEnd));
 		
 		if(attributes.getLength() == 0){
 			assert offsetEnd - offsetStart == qName.length() + 2 : "Offset errati per l'elemnto " + qName +": " + offsetStart + ", " +offsetEnd ;
 		}
 		
 //		int offsetStart = offsetEnd - elementStartAt;
-		System.out.println("element Offset " + offsetStart);
+//		System.out.println("element Offset " + offsetStart);
 		int length = offsetEnd - offsetStart;
 		xesd.setElement(offsetStart, length);
 
@@ -52,8 +52,8 @@ public class MyHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 
-		System.out.println("end element " + qName + " at: "
-				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
+//		System.out.println("end element " + qName + " at: "
+//				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
 		int offsetEnd = getOffset();
 		int offsetStart = originalXml.lastIndexOf('<', offsetEnd);
 //		int offsetStart = offsetEnd - elementStartAt;
@@ -67,8 +67,8 @@ public class MyHandler extends DefaultHandler {
 	
 	@Override
 	public void startDocument() throws SAXException {
-		System.out.println("start document at: "
-				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
+//		System.out.println("start document at: "
+//				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
 
 		try {
 			xesd.clear();
@@ -82,22 +82,22 @@ public class MyHandler extends DefaultHandler {
 	public void startPrefixMapping(String prefix, String uri)
 			throws SAXException {
 		// TODO Auto-generated method stub
-		System.out.println("start prefix mapping at: "
-				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
+//		System.out.println("start prefix mapping at: "
+//				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
 	}
 	
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("end document at: "
-				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
+//		System.out.println("end document at: "
+//				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
 
 		originalXml = null;
 	}
 
 	@Override
 	public void endPrefixMapping(String prefix) throws SAXException {
-		System.out.println("end prefix mapping at: "
-				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
+//		System.out.println("end prefix mapping at: "
+//				+ locator.getLineNumber() + ":" + locator.getColumnNumber());
 	}
 	
 	public int getOffset(){
